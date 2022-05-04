@@ -10,3 +10,47 @@
 [2022/4/19 11:27:48 GMT+0800] : launched
 
 
+[2022/4/19 14:1:35 GMT+0800] : launched
+
+
+[2022/4/20 10:13:28 GMT+0800] : launched
+
+
+[2022/4/21 8:42:31 GMT+0800] : launched
+
+
+[2022/4/26 20:37:43 GMT+0800] : launched
+
+
+[2022/4/26 20:42:27 GMT+0800] : launched
+
+
+[2022/4/26 20:43:30 GMT+0800] : launched
+
+
+[2022/4/28 19:8:50 GMT+0800] : launched
+
+
+[2022/4/28 21:49:1 GMT+0800] : launched
+
+
+[2022/4/29 18:18:27 GMT+0800] : launched
+[2022/5/2 15:19:4 GMT+0800] : launched
+[Warning] : EBUSY: resource busy or locked, open 'C:\Users\Warmcx\AppData\Local\Temp\jlink_internal_devices_tmp.1651475944790.xml'
+Error: EBUSY: resource busy or locked, open 'C:\Users\Warmcx\AppData\Local\Temp\jlink_internal_devices_tmp.1651475944790.xml'
+	at Object.openSync (node:fs:585:3)
+	at Object.func [as openSync] (node:electron/js2c/asar_bundle:5:1800)
+	at Object.readFileSync (node:fs:453:35)
+	at Object.e.readFileSync (node:electron/js2c/asar_bundle:5:9148)
+	at a.Read (c:\Users\Warmcx\.vscode\extensions\cl.eide-3.5.0\dist\extension.js:1:4005)
+	at E.loadJlinkInternalDevs (c:\Users\Warmcx\.vscode\extensions\cl.eide-3.5.0\dist\extension.js:1:12950)
+	at E.loadJlinkDevList (c:\Users\Warmcx\.vscode\extensions\cl.eide-3.5.0\dist\extension.js:1:11506)
+	at EventEmitter.<anonymous> (c:\Users\Warmcx\.vscode\extensions\cl.eide-3.5.0\dist\extension.js:1:6821)
+	at EventEmitter.emit (node:events:390:28)
+	at Function.emit (c:\Users\Warmcx\.vscode\extensions\cl.eide-3.5.0\dist\extension.js:1:5043)
+	at c:\Users\Warmcx\.vscode\extensions\cl.eide-3.5.0\dist\extension.js:7:25300
+	at Generator.next (<anonymous>)
+	at s (c:\Users\Warmcx\.vscode\extensions\cl.eide-3.5.0\dist\extension.js:7:9062)
+
+
+[2022/5/3 9:35:47 GMT+0800] : launched

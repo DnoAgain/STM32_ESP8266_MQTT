@@ -35,7 +35,7 @@ extern "C" {
 /* USER CODE END Includes */
 
 extern UART_HandleTypeDef huart1;
-
+extern UART_HandleTypeDef huart3;
 
 /* USER CODE BEGIN Private defines */
 
@@ -43,14 +43,18 @@ extern UART_HandleTypeDef huart1;
 #define EN_USART1  1
 #define USART1_REC_LEN  			200 
 
+#define TXBUF_SIZE_MAX        100
+
 #define MAX_REC_LENGTH        200
 
-#define USART_DEBUG		&huart1  
+#define USART_DEBUG		huart1  
 /* USER CODE END Private defines */
 
 void MX_USART1_Init(void);
-void UsartPrintf(UART_HandleTypeDef* uartHandle, char *fmt,...);
-
+void MX_USART3_Init(void);
+void uart1_printf(const char *format, ...);
+void uart3_printf(const char *format, ...);
+void Usart_SendString(unsigned char *str, unsigned short len);
 /* USER CODE BEGIN Prototypes */
 
 /* USER CODE END Prototypes */

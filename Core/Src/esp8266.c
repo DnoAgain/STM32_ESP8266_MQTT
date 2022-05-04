@@ -18,8 +18,7 @@
 	************************************************************
 **/
 
-//单片机头文件
-//#include "stm32f10x.h"
+
 
 //网络设备驱动
 #include "esp8266.h"
@@ -41,6 +40,11 @@
 unsigned char esp8266_buf[128];
 unsigned short esp8266_cnt = 0, esp8266_cntPre = 0;
 
+
+uint8_t aRxBuffer;
+unsigned char Uart3_RxBuff[256];
+unsigned short Uart3_Rx_Cnt = 0;
+uint8_t cAlmStr[] = "Data overflow 256\r\n";
 
 //==========================================================
 //	函数名称：	ESP8266_Clear
@@ -108,7 +112,7 @@ _Bool ESP8266_SendCmd(char *cmd, char *res)
 	
 	unsigned char timeOut = 200;
 
-	HAL_UART_Transmit(&huart1, (unsigned char *)cmd, strlen((const char *)cmd),0xffff);
+	HAL_UART_Transmit(&huart3, (unsigned char *)cmd, strlen((const char *)cmd),0xffff);
 	
 	while(timeOut--)
 	{
@@ -150,7 +154,7 @@ void ESP8266_SendData(unsigned char *data, unsigned short len)
 	sprintf(cmdBuf, "AT+CIPSEND=%d\r\n", len);		//发送命令
 	if(!ESP8266_SendCmd(cmdBuf, ">"))				//收到‘>’时可以发送数据
 	{
-//		HAL_UART_Transmit(USART2, data, len);		//发送设备连接请求数据
+		Usart_SendString(data, len);		//发送设备连接请求数据
 	}
 
 }
@@ -179,7 +183,7 @@ unsigned char *ESP8266_GetIPD(unsigned short timeOut)
 			ptrIPD = strstr((char *)esp8266_buf, "IPD,");				//搜索“IPD”头
 			if(ptrIPD == NULL)											//如果没找到，可能是IPD头的延迟，还是需要等待一会，但不会超过设定的时间
 			{
-				//UsartPrintf(USART_DEBUG, "\"IPD\" not found\r\n");
+				// UsartPrintf("\"IPD\" not found\r\n");
 			}
 			else
 			{
@@ -216,52 +220,52 @@ unsigned char *ESP8266_GetIPD(unsigned short timeOut)
 void ESP8266_Init(void)
 {
 	
-	GPIO_InitTypeDef GPIO_initStruct;
+	// GPIO_InitTypeDef GPIO_initStruct;
   
-	__HAL_RCC_GPIOA_CLK_ENABLE();
+	// __HAL_RCC_GPIOA_CLK_ENABLE();
 	
 
-	//ESP8266复位引脚
-	GPIO_initStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_initStruct.Pin = GPIO_PIN_14;					//GPIOC14-复位
-	GPIO_initStruct.Speed =  GPIO_SPEED_FREQ_HIGH ;
-	HAL_GPIO_Init(GPIOC, &GPIO_initStruct);
+	// //ESP8266复位引脚
+	// GPIO_initStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	// GPIO_initStruct.Pin = GPIO_PIN_5;					//GPIOA5-复位
+	// GPIO_initStruct.Speed =  GPIO_SPEED_FREQ_HIGH ;
+	// HAL_GPIO_Init(GPIOA, &GPIO_initStruct);
 	
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_RESET);
-	delay_ms(250);
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_SET);
-	delay_ms(500);
+	// HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
+	// delay_ms(150);//250
+	// HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
+	// delay_ms(200);
 	
 	ESP8266_Clear();
 	
-	UsartPrintf(USART_DEBUG, "1. AT\r\n");
+	uart1_printf("1. AT\r\n");
 	while(ESP8266_SendCmd("AT\r\n", "OK"))
-		delay_ms(500);
+	delay_ms(200);
 	
-	UsartPrintf(USART_DEBUG, "2. CWMODE\r\n");
+	uart1_printf( "2. CWMODE\r\n");
 	while(ESP8266_SendCmd("AT+CWMODE=1\r\n", "OK"))
-		delay_ms(500);
+	delay_ms(200);
 	
-	UsartPrintf(USART_DEBUG, "3. AT+CWDHCP\r\n");
+	uart1_printf("3. AT+CWDHCP\r\n");
 	while(ESP8266_SendCmd("AT+CWDHCP=1,1\r\n", "OK"))
-		delay_ms(500);
+	delay_ms(200);
 	
-	UsartPrintf(USART_DEBUG, "4. CWJAP\r\n");
+	uart1_printf("4. CWJAP\r\n");
 	while(ESP8266_SendCmd(ESP8266_WIFI_INFO, "GOT IP"))
-		delay_ms(500);
+	delay_ms(200);
 	
-	UsartPrintf(USART_DEBUG, "5. CIPSTART\r\n");
+	uart1_printf("5. CIPSTART\r\n");
 	while(ESP8266_SendCmd(ESP8266_ONENET_INFO, "CONNECT"))
-		delay_ms(500);
+	delay_ms(200);//500
 	
-	UsartPrintf(USART_DEBUG, "6. ESP8266 Init OK\r\n");
+	uart1_printf("6. ESP8266 Init OK\r\n");
 
 }
 
 //==========================================================
-//	函数名称：	USART2_IRQHandler
+//	函数名称：	USART3_IRQHandler
 //
-//	函数功能：	串口2收发中断
+//	函数功能：	串口3收发中断
 //
 //	入口参数：	无
 //
@@ -269,15 +273,45 @@ void ESP8266_Init(void)
 //
 //	说明：		
 //==========================================================
-void USART2_IRQHandler(void)
+void USART3_IRQHandler(void)
 {
-
-	if( __HAL_USART_GET_FLAG(&huart1, USART_IT_RXNE) != RESET) //接收中断
-	{
-		if(esp8266_cnt >= sizeof(esp8266_buf))	esp8266_cnt = 0; //防止串口被刷爆
-		esp8266_buf[esp8266_cnt++] = USART2->DR;
+	HAL_UART_IRQHandler(&huart3);
+	// if( __HAL_USART_GET_FLAG(&huart1, USART_IT_RXNE) != RESET) //接收中断
+	// {
+	// 	if(esp8266_cnt >= sizeof(esp8266_buf))	esp8266_cnt = 0; //防止串口被刷爆
+	// 	esp8266_buf[esp8266_cnt++] = USART2->DR;
 		
-		__HAL_USART_CLEAR_FLAG(&huart1, USART_FLAG_RXNE);
-	}
+	// 	__HAL_USART_CLEAR_FLAG(&huart1, USART_FLAG_RXNE);
+	// }
 
+}
+
+
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+	UNUSED(huart);
+		
+		Uart3_RxBuff[Uart3_Rx_Cnt++] = aRxBuffer;
+		if(Uart3_Rx_Cnt > 256)  //溢出判断
+		{
+			Uart3_Rx_Cnt = 0;
+			memset(Uart3_RxBuff,0x00,sizeof(Uart3_RxBuff));
+			HAL_UART_Transmit(&huart3, (uint8_t *)&cAlmStr, sizeof(cAlmStr),0xFFFF);	
+		}
+		else
+		{
+			// Uart3_RxBuff[Uart3_Rx_Cnt++] = aRxBuffer;   //接收数据转存
+		
+			if((Uart3_RxBuff[Uart3_Rx_Cnt-1] == 0x0A)&&(Uart3_RxBuff[Uart3_Rx_Cnt-2] == 0x0D)) //判断结束位
+			{
+				HAL_UART_Transmit(&huart3, (uint8_t *)&Uart3_RxBuff, Uart3_Rx_Cnt,0xFFFF); //将收到的信息发送出去
+				Uart3_Rx_Cnt = 0;
+				memset(Uart3_RxBuff,0x00,sizeof(Uart3_RxBuff)); //清空数组
+			}
+
+		}
+		aRxBuffer = 0;
+	HAL_UART_Receive_IT(&huart3, (uint8_t *)&aRxBuffer, 1);
+	
 }

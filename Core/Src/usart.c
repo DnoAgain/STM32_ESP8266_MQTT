@@ -41,7 +41,7 @@ void MX_USART1_Init(void)
 
   /* USER CODE END USART1_Init 1 */
   huart1.Instance = USART1;
-  huart1.Init.BaudRate = 9600;
+  huart1.Init.BaudRate = 115200;
   huart1.Init.WordLength = UART_WORDLENGTH_8B;
   huart1.Init.StopBits = UART_STOPBITS_1;
   huart1.Init.Parity = UART_PARITY_NONE;
@@ -58,18 +58,12 @@ void MX_USART1_Init(void)
 
 }
 /* USART3 init function */
-void MX_USART1_Init(void)
+void MX_USART3_Init(void)
 {
 
-  /* USER CODE BEGIN USART1_Init 0 */
-
-  /* USER CODE END USART1_Init 0 */
-
-  /* USER CODE BEGIN USART1_Init 1 */
-
-  /* USER CODE END USART1_Init 1 */
+ 
   huart3.Instance = USART3;
-  huart3.Init.BaudRate = 9600;
+  huart3.Init.BaudRate = 115200;
   huart3.Init.WordLength = UART_WORDLENGTH_8B;
   huart3.Init.StopBits = UART_STOPBITS_1;
   huart3.Init.Parity = UART_PARITY_NONE;
@@ -80,10 +74,7 @@ void MX_USART1_Init(void)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN USART1_Init 2 */
-
-  /* USER CODE END USART1_Init 2 */
-
+  
 }
 
 
@@ -125,20 +116,20 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
   {
     __HAL_RCC_USART3_CLK_ENABLE();
 
-    __HAL_RCC_GPIOA_CLK_ENABLE();
+    __HAL_RCC_GPIOB_CLK_ENABLE();
     /**USART3GPIO Configuration
-    PA9     ------> USART1_TX
-    PA10     ------> USART1_RX
+    PB10     ------> USART3_TX
+    PB11     ------> USART3_RX
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_9;
+    GPIO_InitStruct.Pin = GPIO_PIN_10;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = GPIO_PIN_10;
+    GPIO_InitStruct.Pin = GPIO_PIN_11;
     GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
     /* USART3interrupt Init */
     HAL_NVIC_SetPriority(USART3_IRQn, 3, 3);
@@ -151,76 +142,57 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
   
 }
 
-////void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
-//{
 
-//  if(uartHandle->Instance==USART1)
-//  {
-//  /* USER CODE BEGIN USART1_MspDeInit 0 */
+void uart1_printf(const char *format, ...)
+{
+    va_list args;
+    uint32_t length;
+    uint8_t txbuf[TXBUF_SIZE_MAX] = {0};
+ 
+    va_start(args, format);
+    length = vsnprintf((char *)txbuf, sizeof(txbuf), (char *)format, args);
+    va_end(args);
+    HAL_UART_Transmit(&huart1, (uint8_t *)txbuf, length, HAL_MAX_DELAY);
+    memset(txbuf, 0, TXBUF_SIZE_MAX);
+}
 
-//  /* USER CODE END USART1_MspDeInit 0 */
-//    /* Peripheral clock disable */
-//    __HAL_RCC_USART1_CLK_DISABLE();
-
-//    /**USART1 GPIO Configuration
-//    PA9     ------> USART1_TX
-//    PA10     ------> USART1_RX
-//    */
-//    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_9|GPIO_PIN_10);
-
-//    /* USART1 interrupt Deinit */
-//    HAL_NVIC_DisableIRQ(USART1_IRQn);
-//  /* USER CODE BEGIN USART1_MspDeInit 1 */
-
-//  /* USER CODE END USART1_MspDeInit 1 */
-//  }
-//} 
-
-
-//void USART1_printf (char *fmt, ...){ 
-//	char buffer[USART1_REC_LEN+1];  // 数据长度
-//	uint8_t i = 0;
-//  unsigned int k=0;
-//	va_list arg_ptr;
-//	va_start(arg_ptr, fmt);  
-//	vsnprintf(buffer, USART1_REC_LEN+1, fmt, arg_ptr);
-//	while ((i < USART1_REC_LEN) && (i < strlen(buffer))){
-//        HAL_UART_Transmit(&huart1, (uint8_t *) buffer + k, 1, 1000);
-//        k++;
-//        while ( __HAL_UART_GET_FLAG(&huart1, UART_FLAG_TC) == RESET); 
-//	}
-//	va_end(arg_ptr);
-//}
+void uart3_printf(const char *format, ...)
+{
+    va_list args;
+    uint32_t length;
+    uint8_t txbuf[TXBUF_SIZE_MAX] = {0};
+ 
+    va_start(args, format);
+    length = vsnprintf((char *)txbuf, sizeof(txbuf), (char *)format, args);
+    va_end(args);
+    HAL_UART_Transmit(&huart3, (uint8_t *)txbuf, length, HAL_MAX_DELAY);
+    memset(txbuf, 0, TXBUF_SIZE_MAX);
+}
 
 /*
 ************************************************************
-*	函数名称：	UsartPrintf
+*	函数名称：	Usart_SendString
 *
-*	函数功能：	格式化打印
+*	函数功能：	串口数据发送
 *
 *	入口参数：	USARTx：串口组
-*				fmt：不定长参
+*				str：要发送的数据
+*				len：数据长度
 *
 *	返回参数：	无
 *
 *	说明：		
 ************************************************************
 */
-void UsartPrintf(UART_HandleTypeDef* uartHandle, char *fmt,...)
+void Usart_SendString(unsigned char *str, unsigned short len)
 {
 
-	unsigned char UsartPrintfBuf[296];
-	va_list ap;
-	unsigned char *pStr = UsartPrintfBuf;
+	unsigned short count = 0;
 	
-	va_start(ap, fmt);
-	vsnprintf((char *)UsartPrintfBuf, sizeof(UsartPrintfBuf), fmt, ap);							//格式化
-	va_end(ap);
-	
-	while(*pStr != 0)
+	for(; count < len; count++)
 	{
-		HAL_UART_Transmit(uartHandle, (uint8_t *)&pStr,1,0xffff);
-		while(__HAL_USART_GET_FLAG(uartHandle, USART_FLAG_TC) == RESET);
+		HAL_UART_Transmit(&huart3, str,len,0xffff);									//发送数据
+		while(__HAL_USART_GET_FLAG(&huart3, USART_FLAG_TC) == RESET);		//等待发送完成
 	}
 
 }

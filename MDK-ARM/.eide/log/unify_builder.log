@@ -1,3 +1,266 @@
 [2022-04-19 12:07:08]	[done]
 	build successfully !
 
+[2022-04-19 19:50:57]	[done]
+	build successfully !
+
+[2022-04-19 20:30:12]	[done]
+	build successfully !
+
+[2022-04-19 21:53:54]	[done]
+	build successfully !
+
+[2022-04-20 20:01:53]	[done]
+	build successfully !
+
+[2022-04-21 10:11:11]	compilation failed at : "d:\Work\stm32f1x\OV7670\Core\Src\usart.c", exit code: 1
+  at unify_builder.Program.compileByMulThread (System.Int32 thrNum, unify_builder.CmdGenerator+CmdInfo[] cmds, System.Collections.Generic.List`1[T] errLogs) [0x00104] in <82200d7cd0cf4a279c5fb9fc299a656f>:0 
+  at unify_builder.Program.Main (System.String[] args) [0x0196e] in <82200d7cd0cf4a279c5fb9fc299a656f>:0 
+---
+".\..\Core\Src\usart.c", line 192: Error:  #167: argument of type "UART_HandleTypeDef **" is incompatible with parameter of type "UART_HandleTypeDef *"
+  		HAL_UART_Transmit(&uartHandle, (uint8_t *)&pStr,1,0xffff);
+  		                  ^
+".\..\Core\Src\usart.c", line 220: Error:  #167: argument of type "UART_HandleTypeDef **" is incompatible with parameter of type "UART_HandleTypeDef *"
+  		HAL_UART_Transmit(&uartHandle, str,len,0xffff);									//????????
+  		                  ^
+.\..\Core\Src\usart.c: 0 warnings, 2 errors
+
+[2022-04-21 10:12:51]	[done]
+	build successfully !
+
+[2022-04-21 10:13:25]	[done]
+	build successfully !
+
+[2022-04-21 10:15:53]	[done]
+	build successfully !
+
+[2022-04-21 14:11:32]	[done]
+	build successfully !
+
+[2022-04-21 14:21:57]	[done]
+	build successfully !
+
+[2022-04-21 14:42:54]	[done]
+	build successfully !
+
+[2022-04-26 20:41:31]	[done]
+	build successfully !
+
+[2022-04-28 20:21:31]	[done]
+	build successfully !
+
+[2022-04-28 20:23:06]	[done]
+	build successfully !
+
+[2022-04-28 20:25:03]	[done]
+	build successfully !
+
+[2022-04-28 20:35:36]	[done]
+	build successfully !
+
+[2022-04-28 21:49:47]	[done]
+	build successfully !
+
+[2022-04-28 22:01:59]	[done]
+	build successfully !
+
+[2022-04-28 22:05:45]	[done]
+	build successfully !
+
+[2022-04-28 22:07:23]	[done]
+	build successfully !
+
+[2022-04-28 23:19:19]	compilation failed at : "d:\Work\stm32f1x\OV7670\Core\Src\esp8266.c", exit code: 1
+  at unify_builder.Program.Main (System.String[] args) [0x01860] in <c833688a764e49d8a80e8dad07cf8dd9>:0 
+---
+".\..\Core\Src\esp8266.c", line 181: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  				UsartPrintf(USART_DEBUG, "\"IPD\" not found\r\n");
+  				            ^
+".\..\Core\Src\esp8266.c", line 236: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  	UsartPrintf(USART_DEBUG, "1. AT\r\n");
+  	            ^
+".\..\Core\Src\esp8266.c", line 240: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  	UsartPrintf(USART_DEBUG, "2. CWMODE\r\n");
+  	            ^
+".\..\Core\Src\esp8266.c", line 244: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  	UsartPrintf(USART_DEBUG, "3. AT+CWDHCP\r\n");
+  	            ^
+".\..\Core\Src\esp8266.c", line 248: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  	UsartPrintf(USART_DEBUG, "4. CWJAP\r\n");
+  	            ^
+".\..\Core\Src\esp8266.c", line 252: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  	UsartPrintf(USART_DEBUG, "5. CIPSTART\r\n");
+  	            ^
+".\..\Core\Src\esp8266.c", line 256: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  	UsartPrintf(USART_DEBUG, "6. ESP8266 Init OK\r\n");
+  	            ^
+.\..\Core\Src\esp8266.c: 0 warnings, 7 errors
+
+[2022-04-28 23:20:40]	compilation failed at : "d:\Work\stm32f1x\OV7670\Core\Src\onenet.c", exit code: 1
+  at unify_builder.Program.Main (System.String[] args) [0x01860] in <c833688a764e49d8a80e8dad07cf8dd9>:0 
+---
+".\..\Core\Src\onenet.c", line 70: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  	UsartPrintf(USART_DEBUG, "OneNet_DevLink\r\n"
+  	            ^
+".\..\Core\Src\onenet.c", line 85: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  					case 0:UsartPrintf(USART_DEBUG, "Tips:	????????\r\n");status = 0;break;
+  					                   ^
+".\..\Core\Src\onenet.c", line 87: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  					case 1:UsartPrintf(USART_DEBUG, "WARN:	??????????????????\r\n");break;
+  					                   ^
+".\..\Core\Src\onenet.c", line 88: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  					case 2:UsartPrintf(USART_DEBUG, "WARN:	????????????????clientid\r\n");break;
+  					                   ^
+".\..\Core\Src\onenet.c", line 89: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  					case 3:UsartPrintf(USART_DEBUG, "WARN:	????????????????????\r\n");break;
+  					                   ^
+".\..\Core\Src\onenet.c", line 90: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  					case 4:UsartPrintf(USART_DEBUG, "WARN:	??????????????????????????\r\n");break;
+  					                   ^
+".\..\Core\Src\onenet.c", line 91: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  					case 5:UsartPrintf(USART_DEBUG, "WARN:	??????????????????(????token????)\r\n");break;
+  					                   ^
+".\..\Core\Src\onenet.c", line 93: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  					default:UsartPrintf(USART_DEBUG, "ERR:	??????????????????\r\n");break;
+  					                    ^
+".\..\Core\Src\onenet.c", line 101: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  		UsartPrintf(USART_DEBUG, "WARN:	MQTT_PacketConnect Failed\r\n");
+  		            ^
+".\..\Core\Src\onenet.c", line 127: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  		UsartPrintf(USART_DEBUG, "Subscribe Topic: %s\r\n", topics[i]);
+  		            ^
+".\..\Core\Src\onenet.c", line 155: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  	UsartPrintf(USART_DEBUG, "Publish Topic: %s, Msg: %s\r\n", topic, msg);
+  	            ^
+".\..\Core\Src\onenet.c", line 206: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  				UsartPrintf(USART_DEBUG, "cmdid: %s, req: %s, req_len: %d\r\n", cmdid_topic, req_payload, req_len);
+  				            ^
+".\..\Core\Src\onenet.c", line 210: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  					UsartPrintf(USART_DEBUG, "Tips:	Send CmdResp\r\n");
+  					            ^
+".\..\Core\Src\onenet.c", line 224: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  				UsartPrintf(USART_DEBUG, "topic: %s, topic_len: %d, payload: %s, payload_len: %d\r\n",
+  				            ^
+".\..\Core\Src\onenet.c", line 233: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  							UsartPrintf(USART_DEBUG, "Tips:	Send PublishAck\r\n");
+  							            ^
+".\..\Core\Src\onenet.c", line 244: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  							UsartPrintf(USART_DEBUG, "Tips:	Send PublishRec\r\n");
+  							            ^
+".\..\Core\Src\onenet.c", line 261: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  				UsartPrintf(USART_DEBUG, "Tips:	MQTT Publish Send OK\r\n");
+  				            ^
+".\..\Core\Src\onenet.c", line 269: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  				UsartPrintf(USART_DEBUG, "Tips:	Rev PublishRec\r\n");
+  				            ^
+".\..\Core\Src\onenet.c", line 272: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  					UsartPrintf(USART_DEBUG, "Tips:	Send PublishRel\r\n");
+  					            ^
+".\..\Core\Src\onenet.c", line 284: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  				UsartPrintf(USART_DEBUG, "Tips:	Rev PublishRel\r\n");
+  				            ^
+".\..\Core\Src\onenet.c", line 287: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  					UsartPrintf(USART_DEBUG, "Tips:	Send PublishComp\r\n");
+  					            ^
+".\..\Core\Src\onenet.c", line 299: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  				UsartPrintf(USART_DEBUG, "Tips:	Rev PublishComp\r\n");
+  				            ^
+".\..\Core\Src\onenet.c", line 307: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  				UsartPrintf(USART_DEBUG, "Tips:	MQTT Subscribe OK\r\n");
+  				            ^
+".\..\Core\Src\onenet.c", line 309: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  				UsartPrintf(USART_DEBUG, "Tips:	MQTT Subscribe Err\r\n");
+  				            ^
+".\..\Core\Src\onenet.c", line 316: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  				UsartPrintf(USART_DEBUG, "Tips:	MQTT UnSubscribe OK\r\n");
+  				            ^
+".\..\Core\Src\onenet.c", line 318: Error:  #167: argument of type "UART_HandleTypeDef" is incompatible with parameter of type "UART_HandleTypeDef *"
+  				UsartPrintf(USART_DEBUG, "Tips:	MQTT UnSubscribe Err\r\n");
+  				            ^
+.\..\Core\Src\onenet.c: 0 warnings, 26 errors
+
+[2022-04-28 23:21:18]	[done]
+	build successfully !
+
+[2022-04-28 23:23:47]	[done]
+	build successfully !
+
+[2022-04-28 23:25:38]	[done]
+	build successfully !
+
+[2022-04-29 18:56:15]	[done]
+	build successfully !
+
+[2022-04-30 11:28:22]	compilation failed at : "d:\Work\stm32f1x\OV7670\Core\Src\usart.c", exit code: 1
+  at unify_builder.Program.compileByMulThread (System.Int32 thrNum, unify_builder.CmdGenerator+CmdInfo[] cmds, System.Collections.Generic.List`1[T] errLogs) [0x00104] in <c833688a764e49d8a80e8dad07cf8dd9>:0 
+  at unify_builder.Program.Main (System.String[] args) [0x018da] in <c833688a764e49d8a80e8dad07cf8dd9>:0 
+---
+".\..\Core\Src\usart.c", line 187: Error:  #147-D: declaration is incompatible with "void Usart_SendString(UART_HandleTypeDef *, unsigned char *, unsigned short)"  (declared at line 57 of ".\..\Core\Inc\usart.h")
+  void Usart_SendString(unsigned char *str, unsigned short len)
+       ^
+.\..\Core\Src\usart.c: 0 warnings, 1 error
+
+[2022-04-30 11:29:39]	compilation failed at : "d:\Work\stm32f1x\OV7670\Core\Src\esp8266.c", exit code: 1
+  at unify_builder.Program.compileByMulThread (System.Int32 thrNum, unify_builder.CmdGenerator+CmdInfo[] cmds, System.Collections.Generic.List`1[T] errLogs) [0x00104] in <c833688a764e49d8a80e8dad07cf8dd9>:0 
+  at unify_builder.Program.Main (System.String[] args) [0x018da] in <c833688a764e49d8a80e8dad07cf8dd9>:0 
+---
+".\..\Core\Src\esp8266.c", line 152: Error:  #167: argument of type "UART_HandleTypeDef *" is incompatible with parameter of type "unsigned char *"
+  		Usart_SendString(&huart3, data, len);		//????????????????????
+  		                 ^
+".\..\Core\Src\esp8266.c", line 152: Error:  #167: argument of type "unsigned char *" is incompatible with parameter of type "unsigned short"
+  		Usart_SendString(&huart3, data, len);		//????????????????????
+  		                          ^
+".\..\Core\Src\esp8266.c", line 152: Error:  #140: too many arguments in function call
+  		Usart_SendString(&huart3, data, len);		//????????????????????
+  		                                ^
+.\..\Core\Src\esp8266.c: 0 warnings, 3 errors
+
+[2022-04-30 11:30:48]	[done]
+	build successfully !
+
+[2022-04-30 14:18:00]	[done]
+	build successfully !
+
+[2022-04-30 15:08:03]	[done]
+	build successfully !
+
+[2022-05-03 15:29:19]	[done]
+	build successfully !
+
+[2022-05-03 15:30:58]	[done]
+	build successfully !
+
+[2022-05-03 15:31:46]	[done]
+	build successfully !
+
+[2022-05-03 15:36:05]	[done]
+	build successfully !
+
+[2022-05-03 23:04:27]	[done]
+	build successfully !
+
+[2022-05-03 23:46:32]	[done]
+	build successfully !
+
+[2022-05-03 23:47:51]	[done]
+	build successfully !
+
+[2022-05-04 08:50:22]	[done]
+	build successfully !
+
+[2022-05-04 08:53:17]	[done]
+	build successfully !
+
+[2022-05-04 08:54:43]	[done]
+	build successfully !
+
+[2022-05-04 08:55:10]	compilation failed at : "d:\Work\stm32f1x\OV7670\Core\Src\esp8266.c", exit code: 1
+  at unify_builder.Program.compileByMulThread (System.Int32 thrNum, unify_builder.CmdGenerator+CmdInfo[] cmds, System.Collections.Generic.List`1[T] errLogs) [0x00104] in <c833688a764e49d8a80e8dad07cf8dd9>:0 
+  at unify_builder.Program.Main (System.String[] args) [0x018da] in <c833688a764e49d8a80e8dad07cf8dd9>:0 
+---
+".\..\Core\Src\esp8266.c", line 316: Error: At end of source:  #67: expected a "}"
+.\..\Core\Src\esp8266.c: 0 warnings, 1 error
+
+[2022-05-04 08:55:45]	[done]
+	build successfully !
+

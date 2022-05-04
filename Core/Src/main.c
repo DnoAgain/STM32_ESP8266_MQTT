@@ -26,6 +26,7 @@
 #include "oled.h"
 #include "i2c.h"
 #include "timer.h"
+#include "esp8266.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -70,6 +71,7 @@ void SystemClock_Config(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+  extern uint8_t aRxBuffer;
   static DHT_sensor livingRoom = {GPIOB, GPIO_PIN_4, DHT11};
 
   /* USER CODE END 1 */
@@ -93,12 +95,14 @@ int main(void)
   /* Initialize all configured peripherals */
   delay_Init();
   MX_USART1_Init();
+  MX_USART3_Init();
   MX_I2C1_Init();
   OLED_Init();
 	OLED_ColorTurn(0);//0正常显示，1 反色显示
   OLED_DisplayTurn(0);//0正常显示 1 屏幕翻转显示
-  OLED_Refresh();  
-
+  OLED_Refresh();
+  // ESP8266_Init();
+  HAL_UART_Receive_IT(&huart3,(uint8_t*)&aRxBuffer,1);
 //  TIM3_Init(4999,7199);
   /* USER CODE BEGIN 2 */
   

@@ -16,7 +16,8 @@
             "*.c++": "cpp",
             "*.cpp": "cpp",
             "*.cxx": "cpp",
-            "*.cc": "cpp"
+            "*.cc": "cpp",
+            "cJSON.C": "cpp"
         },
         "[yaml]": {
             "editor.insertSpaces": true,
